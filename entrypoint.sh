@@ -6,10 +6,6 @@ ssh-keyscan -t rsa github.com >> /etc/ssh/ssh_known_hosts
 eval `ssh-agent -s`
 ssh-add - <<< "$SSH_PRIVATE_KEY"
 
-# split single parameter of this script into multiple params for the command
-eval "set -- $1"
-git-filter-repo "$@"
-
 # workaround! tag-callback doesn't appear to be dropping commits as intended.
 if [ -n "$TAG_FILTER" ]; then
     git tag --list \
@@ -17,6 +13,14 @@ if [ -n "$TAG_FILTER" ]; then
         | sed -E 's#^#delete refs/tags/#g' \
         | git update-ref --no-deref --stdin
 
-# push the target branch and all tags
-git push "git@github.com:$TARGET_ORG/$TARGET_REPO.git" HEAD:"$TARGET_BRANCH"
+# split single parameter of this script into multiple params for the command
+eval "set -- $1"
+git-filter-repo "$@"
+
+# push to the target branch
+if [ -n "$TARGET_BRANCH" ]; then
+    git push "git@github.com:$TARGET_ORG/$TARGET_REPO.git" HEAD:"$TARGET_BRANCH"
+fi
+
+# push all tags
 git push --tags "git@github.com:$TARGET_ORG/$TARGET_REPO.git"

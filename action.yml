@@ -13,7 +13,8 @@ inputs:
         required: true
     targetBranch:
         description: 'The target branch'
-        required: true
+        required: false
+        default: ""
     tagFilter:
         description: 'A regular expression filter that will drop all matching tags'
         required: false
