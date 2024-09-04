@@ -25,7 +25,10 @@ git tag --list
 # push to the target branch
 if [ -n "$TARGET_BRANCH" ]; then
     git push "git@github.com:$TARGET_ORG/$TARGET_REPO.git" HEAD:"$TARGET_BRANCH"
+else
+    # push all tags
+    git remote add origin "git@github.com:$TARGET_ORG/$TARGET_REPO.git"
+    git fetch --all
+    git push origin --tags 
 fi
 
-# push all tags
-git push --tags "git@github.com:$TARGET_ORG/$TARGET_REPO.git"
