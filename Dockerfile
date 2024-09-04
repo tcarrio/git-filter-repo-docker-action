@@ -1,4 +1,4 @@
-FROM python:3.8-alpine
+FROM docker.io/library/python:3.12-alpine
 
 RUN apk update && apk upgrade && \
     apk add --no-cache bash git git-fast-import openssh

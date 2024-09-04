@@ -14,6 +14,10 @@ inputs:
     targetBranch:
         description: 'The target branch'
         required: true
+    tagFilter:
+        description: 'A regular expression filter that will drop all matching tags'
+        required: false
+        default: ""
     filterArguments:
         description: 'The raw arguments to pass to git-filter-repo'
 runs:
@@ -24,5 +28,6 @@ runs:
     TARGET_ORG: ${{ inputs.targetOrg }}
     TARGET_REPO: ${{ inputs.targetRepo }}
     TARGET_BRANCH: ${{ inputs.targetBranch }}
+    TAG_FILTER: ${{ inputs.tagFilter }}
   args:
     - ${{ inputs.filterArguments }}
