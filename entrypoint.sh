@@ -12,6 +12,7 @@ if [ -n "$TAG_FILTER" ]; then
         | grep -v -E "$TAG_FILTER" \
         | sed -E 's#^#delete refs/tags/#g' \
         | git update-ref --no-deref --stdin
+fi
 
 # split single parameter of this script into multiple params for the command
 eval "set -- $1"
