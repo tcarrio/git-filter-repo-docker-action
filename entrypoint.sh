@@ -18,6 +18,10 @@ fi
 eval "set -- $1"
 git-filter-repo "$@"
 
+# triage data
+echo "git tags found:"
+git tag --list
+
 # push to the target branch
 if [ -n "$TARGET_BRANCH" ]; then
     git push "git@github.com:$TARGET_ORG/$TARGET_REPO.git" HEAD:"$TARGET_BRANCH"
